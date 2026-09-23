@@ -83,7 +83,7 @@ async function agregarPremio(nuevoPremio) {
             },
             body: JSON.stringify({
                 nombre: nuevoPremio.nombre,
-                stock: nuevoPremio.stock,
+                stock: parseInt(nuevoPremio.stock, 10),
                 imagen: nuevoPremio.imagen
             })
         });
