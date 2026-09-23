@@ -81,7 +81,6 @@ async function agregarPremio(nuevoPremio) {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                id: nuevoPremio.id,
                 nombre: nuevoPremio.nombre,
                 stock: nuevoPremio.stock,
                 imagen: nuevoPremio.imagen

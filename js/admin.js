@@ -93,7 +93,6 @@ if (formAgregarPremio) {
             btnSubmit.innerText = 'Guardando...';
 
             const nuevoPremio = {
-                id: document.getElementById('nuevo-id').value,
                 nombre: document.getElementById('nuevo-nombre').value,
                 stock: document.getElementById('nuevo-stock').value,
                 imagen: imageUrl
