@@ -24,11 +24,12 @@ btnGuardar.addEventListener('click', async () => {
     if (bgFileInput && bgFileInput.files.length > 0) {
         btnGuardar.disabled = true;
         btnGuardar.innerText = 'Subiendo fondo...';
-        const uploadedUrl = await uploadImageToSupabase(bgFileInput.files[0]);
+        // Usamos el bucket 'premios' que sabemos que existe y está configurado
+        const uploadedUrl = await uploadImageToSupabase(bgFileInput.files[0], 'premios');
         if (uploadedUrl) {
             bgUrl = uploadedUrl;
         } else {
-            alert('Error subiendo el fondo. Se mantendrá el anterior.');
+            alert('Error subiendo el fondo. Verifica la conexión.');
         }
     }
     
@@ -43,14 +44,14 @@ btnCargarMas.addEventListener('click', () => {
 
 const BUCKET_NAME = 'premios';
 
-async function uploadImageToSupabase(file) {
+async function uploadImageToSupabase(file, bucket = BUCKET_NAME) {
     if (!file) return '';
     
     const fileExt = file.name.split('.').pop();
     const fileName = `${Date.now()}_${Math.random().toString(36).substring(7)}.${fileExt}`;
     
     try {
-        const response = await fetch(`${SUPABASE_URL}/storage/v1/object/${BUCKET_NAME}/${fileName}`, {
+        const response = await fetch(`${SUPABASE_URL}/storage/v1/object/${bucket}/${fileName}`, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${SUPABASE_KEY}`,
@@ -61,7 +62,7 @@ async function uploadImageToSupabase(file) {
         });
 
         if (!response.ok) return '';
-        return `${SUPABASE_URL}/storage/v1/object/public/${BUCKET_NAME}/${fileName}`;
+        return `${SUPABASE_URL}/storage/v1/object/public/${bucket}/${fileName}`;
     } catch (error) {
         return '';
     }
