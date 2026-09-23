@@ -149,7 +149,7 @@ async function registrarGanador(datosGanador) {
  */
 async function obtenerGanadores(rangoInicio, rangoFin) {
     try {
-        const response = await fetch(`${SUPABASE_URL}/rest/v1/ganadores?select=*&order=created_at.desc`, {
+        const response = await fetch(`${SUPABASE_URL}/rest/v1/ganadores?select=*&order=fecha.desc`, {
             method: 'GET',
             headers: {
                 'apikey': SUPABASE_KEY,
@@ -170,7 +170,7 @@ async function obtenerGanadores(rangoInicio, rangoFin) {
  */
 async function obtenerTodosGanadores() {
     try {
-        const response = await fetch(`${SUPABASE_URL}/rest/v1/ganadores?select=*&order=created_at.desc`, {
+        const response = await fetch(`${SUPABASE_URL}/rest/v1/ganadores?select=*&order=fecha.desc`, {
             method: 'GET',
             headers: {
                 'apikey': SUPABASE_KEY,

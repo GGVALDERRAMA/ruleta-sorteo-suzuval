@@ -76,10 +76,10 @@ async function renderizarGanadores() {
 
     ganadores.forEach(g => {
         const tr = document.createElement('tr');
-        // Formatear fecha si existe (Supabase la devuelve en ISO 8601 por defecto en created_at)
+        // Formatear fecha si existe (Supabase la devuelve en ISO 8601)
         let fechaFormateada = '-';
-        if (g.created_at) {
-            const fecha = new Date(g.created_at);
+        if (g.fecha) {
+            const fecha = new Date(g.fecha);
             fechaFormateada = fecha.toLocaleString('es-CL', {
                 year: 'numeric', month: '2-digit', day: '2-digit', 
                 hour: '2-digit', minute: '2-digit'
@@ -127,8 +127,8 @@ if (btnExportarExcel) {
         // Formatear datos para el excel
         const dataParaExcel = todosLosGanadores.map(g => {
             let fechaF = '';
-            if (g.created_at) {
-                const f = new Date(g.created_at);
+            if (g.fecha) {
+                const f = new Date(g.fecha);
                 fechaF = f.toLocaleString('es-CL');
             }
             return {
