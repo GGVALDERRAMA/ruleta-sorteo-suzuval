@@ -24,6 +24,20 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 });
 
+// Lógica de acceso admin
+const linkAdmin = document.getElementById("link-admin");
+if (linkAdmin) {
+    linkAdmin.addEventListener("click", (e) => {
+        e.preventDefault();
+        const pwd = prompt("Ingrese la contraseña de administrador:");
+        if (pwd === "Suzuval5600.") {
+            window.location.href = "admin.html";
+        } else if (pwd !== null) {
+            alert("Contraseña incorrecta");
+        }
+    });
+}
+
 // Enviar formulario (Transición)
 form.addEventListener("submit", (e) => {
     e.preventDefault();
