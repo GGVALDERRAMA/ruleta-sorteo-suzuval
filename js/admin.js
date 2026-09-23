@@ -135,8 +135,31 @@ function renderizarTabla() {
             <td>${imgHtml}</td>
             <td><strong>${p.nombre}</strong></td>
             <td>${p.stock}</td>
+            <td>
+                <button class="btn-eliminar" data-id="${p.id}" style="background-color: #ef4444; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer;">Eliminar</button>
+            </td>
         `;
         tableBody.appendChild(tr);
+    });
+
+    // Agregar event listeners a los botones de eliminar
+    document.querySelectorAll('.btn-eliminar').forEach(btn => {
+        btn.addEventListener('click', async (e) => {
+            const id = e.target.getAttribute('data-id');
+            if (confirm('¿Estás seguro de que deseas eliminar este premio?')) {
+                e.target.disabled = true;
+                e.target.innerText = 'Eliminando...';
+                const exito = await eliminarPremio(id);
+                if (exito) {
+                    alert('Premio eliminado exitosamente.');
+                    window.location.reload();
+                } else {
+                    alert('Error al eliminar el premio. Verifica la conexión o permisos.');
+                    e.target.disabled = false;
+                    e.target.innerText = 'Eliminar';
+                }
+            }
+        });
     });
 
     currentIndex += PAGE_SIZE;
