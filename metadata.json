@@ -1,0 +1,6 @@
+{
+  "name": "Ruleta de la Suerte",
+  "description": "Una aplicación de sorteos con mecánica 'al agua' y animaciones de ruleta.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}

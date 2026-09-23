@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ruleta de Premios Suzuval</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Capa de Fondo Dinámico (Se actualiza vía JS) -->
+    <div id="dynamic-bg" class="background-layer"></div>
+
+    <!-- Contenedor Principal (Pantalla Pública) -->
+    <main class="app-container">
+        
+        <!-- SECCIÓN 1: FORMULARIO DE REGISTRO -->
+        <section id="registro-section" class="glass-panel active">
+            <div class="logo-container">
+                <img src="assets/Sr.Tuerca.jpeg" alt="Suzuval" class="logo" id="logo-img">
+            </div>
+            <h2>¡Participa y Gana!</h2>
+            <p>Ingresa tus datos para girar la ruleta.</p>
+            
+            <form id="registro-form">
+                <div class="input-group">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" id="nombre" name="nombre" required placeholder="Ej. Juan Pérez">
+                </div>
+                <div class="input-group">
+                    <label for="correo">Correo</label>
+                    <input type="email" id="correo" name="correo" required placeholder="juan@correo.com">
+                </div>
+                <div class="input-group">
+                    <label for="telefono">Teléfono</label>
+                    <div class="input-prefix-wrapper">
+                        <span class="prefix">+56</span>
+                        <input type="tel" id="telefono" name="telefono" required placeholder="9 1234 5678" pattern="[0-9\s]{8,15}" title="Ingrese solo los dígitos restantes">
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary">Ir a la Ruleta</button>
+            </form>
+        </section>
+
+        <!-- SECCIÓN 2: RULETA (Oculta por defecto) -->
+        <section id="ruleta-section" class="glass-panel hidden">
+            <h2 id="ruleta-title">Gira la Ruleta</h2>
+            <p id="ruleta-subtitle">¡Mucha suerte, <span id="nombre-participante"></span>!</p>
+            
+            <!-- Contenedor para mostrar la imagen del premio ganado -->
+            <div id="premio-ganado-container" style="display: none; margin: 15px auto;">
+                <img id="premio-ganado-img" src="" alt="Premio" style="max-width: 250px; max-height: 180px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); object-fit: contain; background: white; padding: 5px;">
+            </div>
+
+            <div class="canvas-container" id="ruleta-canvas-container">
+                <canvas id="ruleta-canvas" width="400" height="400"></canvas>
+                <div class="ruleta-pointer"></div> <!-- Flecha superior -->
+            </div>
+            <button id="btn-girar" class="btn-spin">¡Girar!</button>
+        </section>
+
+    </main>
+
+    <script src="js/api.js"></script>
+    <script src="js/ruleta.js"></script>
+</body>
+</html>
