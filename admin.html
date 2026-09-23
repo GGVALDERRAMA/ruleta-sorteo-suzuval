@@ -17,7 +17,15 @@
 </head>
 <body>
     <div class="admin-container">
-        <div class="glass-panel active">
+        <!-- PANEL DE LOGIN -->
+        <div id="login-panel" class="glass-panel active" style="display: none; text-align: center; padding: 50px 20px;">
+            <h2>Acceso Restringido</h2>
+            <p style="margin-bottom: 25px;">Debes iniciar sesión con tu cuenta de correo @suzuval.cl</p>
+            <button id="btn-login-google" class="btn-primary" style="width: auto; padding: 12px 24px; font-size: 16px;">Iniciar sesión con Google</button>
+        </div>
+        
+        <!-- PANEL DE ADMINISTRADOR -->
+        <div id="admin-panel" class="glass-panel active" style="display: none;">
             <div style="display: flex; justify-content: space-between; align-items: center;">
                 <h2>Panel de Administración</h2>
                 <button id="btn-cerrar-sesion" class="btn-primary" style="background:#dc2626; padding: 8px 16px; width: auto; font-size: 14px;">Cerrar Sesión</button>

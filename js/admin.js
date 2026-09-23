@@ -8,9 +8,27 @@ const tableBody = document.getElementById('premios-body');
 const btnCargarMas = document.getElementById('btn-cargar-mas');
 
 document.addEventListener('DOMContentLoaded', async () => {
+    const loginPanel = document.getElementById('login-panel');
+    const adminPanel = document.getElementById('admin-panel');
+    const btnLogin = document.getElementById('btn-login-google');
+
+    if (btnLogin) {
+        btnLogin.addEventListener('click', () => {
+            btnLogin.innerText = 'Redirigiendo...';
+            btnLogin.disabled = true;
+            loginConGoogle();
+        });
+    }
+
     // Verificar sesión (solo usuarios @suzuval.cl)
     const autenticado = await verificarSesionAdmin();
-    if (!autenticado) return; // Se detiene la ejecución si no está logueado
+    if (!autenticado) {
+        if (loginPanel) loginPanel.style.display = 'block';
+        return; // Se detiene la ejecución si no está logueado
+    }
+
+    // Mostrar panel de administración
+    if (adminPanel) adminPanel.style.display = 'block';
 
     // Lógica del botón cerrar sesión
     const btnCerrarSesion = document.getElementById('btn-cerrar-sesion');

@@ -30,7 +30,6 @@ async function verificarSesionAdmin() {
     const { data: { session }, error } = await supabase.auth.getSession();
     
     if (error || !session) {
-        await loginConGoogle();
         return false;
     }
 
@@ -38,7 +37,6 @@ async function verificarSesionAdmin() {
     if (!email.endsWith('@suzuval.cl')) {
         alert("Acceso denegado: Solo correos @suzuval.cl están permitidos.");
         await supabase.auth.signOut();
-        window.location.href = "index.html";
         return false;
     }
     return true;
