@@ -24,8 +24,8 @@ btnGuardar.addEventListener('click', async () => {
     if (bgFileInput && bgFileInput.files.length > 0) {
         btnGuardar.disabled = true;
         btnGuardar.innerText = 'Subiendo fondo...';
-        // Usamos el bucket 'premios' que sabemos que existe y está configurado
-        const uploadedUrl = await uploadImageToSupabase(bgFileInput.files[0], 'premios');
+        // Usamos el bucket 'fondos' para guardar las imágenes de fondo
+        const uploadedUrl = await uploadImageToSupabase(bgFileInput.files[0], 'fondos');
         if (uploadedUrl) {
             bgUrl = uploadedUrl;
         } else {
@@ -104,7 +104,7 @@ if (formAgregarPremio) {
                 alert('¡Premio agregado exitosamente!');
                 window.location.reload(); // Recargar para ver los cambios
             } else {
-                alert('Hubo un error al guardar el premio en Google Sheets.');
+                alert('Hubo un error al guardar el premio en la Base de Datos. Verifica las Políticas (Policies) de la tabla "premios" en Supabase.');
                 btnSubmit.disabled = false;
                 btnSubmit.innerText = 'Agregar';
             }
