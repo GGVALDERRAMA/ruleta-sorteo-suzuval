@@ -3,14 +3,14 @@ const SUPABASE_URL = 'https://gbbpsoghivdomhnobxhr.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdiYnBzb2doaXZkb21obm9ieGhyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAxMDEzNDEsImV4cCI6MjEwNTY3NzM0MX0.kF2CIgfEADObk38vtfTppQNx0WEq5vOEnCufza6jroY';
 
 // Inicializar cliente Supabase (requiere que el script de CDN esté cargado en HTML)
-const supabase = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
+const supabaseClient = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
 
 /**
  * Inicia sesión con Google usando OAuth.
  */
 async function loginConGoogle() {
-    if (!supabase) return alert("Cliente de Supabase no cargado.");
-    const { data, error } = await supabase.auth.signInWithOAuth({
+    if (!supabaseClient) return alert("Cliente de Supabase no cargado.");
+    const { data, error } = await supabaseClient.auth.signInWithOAuth({
         provider: 'google',
         options: {
             redirectTo: window.location.origin + '/admin.html'
@@ -26,8 +26,8 @@ async function loginConGoogle() {
  * Verifica si el usuario actual está autenticado y tiene correo @suzuval.cl
  */
 async function verificarSesionAdmin() {
-    if (!supabase) return false;
-    const { data: { session }, error } = await supabase.auth.getSession();
+    if (!supabaseClient) return false;
+    const { data: { session }, error } = await supabaseClient.auth.getSession();
     
     if (error || !session) {
         return false;
@@ -36,7 +36,7 @@ async function verificarSesionAdmin() {
     const email = session.user.email;
     if (!email.endsWith('@suzuval.cl')) {
         alert("Acceso denegado: Solo correos @suzuval.cl están permitidos.");
-        await supabase.auth.signOut();
+        await supabaseClient.auth.signOut();
         return false;
     }
     return true;
@@ -46,8 +46,8 @@ async function verificarSesionAdmin() {
  * Cierra la sesión activa.
  */
 async function cerrarSesion() {
-    if (!supabase) return;
-    await supabase.auth.signOut();
+    if (!supabaseClient) return;
+    await supabaseClient.auth.signOut();
     window.location.href = "index.html";
 }
 
