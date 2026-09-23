@@ -8,6 +8,16 @@ const tableBody = document.getElementById('premios-body');
 const btnCargarMas = document.getElementById('btn-cargar-mas');
 
 document.addEventListener('DOMContentLoaded', async () => {
+    // Verificar sesión (solo usuarios @suzuval.cl)
+    const autenticado = await verificarSesionAdmin();
+    if (!autenticado) return; // Se detiene la ejecución si no está logueado
+
+    // Lógica del botón cerrar sesión
+    const btnCerrarSesion = document.getElementById('btn-cerrar-sesion');
+    if (btnCerrarSesion) {
+        btnCerrarSesion.addEventListener('click', cerrarSesion);
+    }
+
     // Cargar config guardada
     const currentBg = localStorage.getItem('BG_URL');
     if (currentBg && bgCurrentText) {
@@ -136,10 +146,39 @@ function renderizarTabla() {
             <td><strong>${p.nombre}</strong></td>
             <td>${p.stock}</td>
             <td>
+                <button class="btn-duplicar" data-nombre="${p.nombre}" data-imagen="${p.imagen || ''}" style="background-color: #3b82f6; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; margin-right: 5px;">Duplicar</button>
                 <button class="btn-eliminar" data-id="${p.id}" style="background-color: #ef4444; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer;">Eliminar</button>
             </td>
         `;
         tableBody.appendChild(tr);
+    });
+
+    // Agregar event listeners a los botones de duplicar
+    document.querySelectorAll('.btn-duplicar').forEach(btn => {
+        btn.addEventListener('click', async (e) => {
+            const nombre = e.target.getAttribute('data-nombre');
+            const imagen = e.target.getAttribute('data-imagen');
+            if (confirm(`¿Deseas duplicar el premio "${nombre}"?`)) {
+                e.target.disabled = true;
+                e.target.innerText = 'Duplicando...';
+                
+                const nuevoPremio = {
+                    nombre: nombre,
+                    stock: 1,
+                    imagen: imagen
+                };
+                
+                const exito = await agregarPremio(nuevoPremio);
+                if (exito) {
+                    alert('Premio duplicado exitosamente.');
+                    window.location.reload();
+                } else {
+                    alert('Error al duplicar el premio.');
+                    e.target.disabled = false;
+                    e.target.innerText = 'Duplicar';
+                }
+            }
+        });
     });
 
     // Agregar event listeners a los botones de eliminar

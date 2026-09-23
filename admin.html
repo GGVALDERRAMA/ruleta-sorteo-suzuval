@@ -18,7 +18,10 @@
 <body>
     <div class="admin-container">
         <div class="glass-panel active">
-            <h2>Panel de Administración</h2>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h2>Panel de Administración</h2>
+                <button id="btn-cerrar-sesion" class="btn-primary" style="background:#dc2626; padding: 8px 16px; width: auto; font-size: 14px;">Cerrar Sesión</button>
+            </div>
             <p>Configura los premios y gestiona el inventario.</p>
             
 
@@ -39,9 +42,9 @@
                     <label>Nombre del Premio</label>
                     <input type="text" id="nuevo-nombre" required placeholder="Ej: Casco">
                 </div>
-                <div class="input-group" style="margin-bottom: 0; flex: 1;">
+                <div class="input-group" style="margin-bottom: 0; flex: 1; display: none;">
                     <label>Stock</label>
-                    <input type="number" id="nuevo-stock" required placeholder="Ej: 10">
+                    <input type="number" id="nuevo-stock" value="1" required placeholder="Ej: 1">
                 </div>
                 <div class="input-group" style="margin-bottom: 0; flex: 2;">
                     <label>Imagen del Premio (Desde tu PC)</label>
@@ -73,6 +76,7 @@
         </div>
     </div>
     
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/api.js"></script>
     <script src="js/admin.js"></script>
 </body>
