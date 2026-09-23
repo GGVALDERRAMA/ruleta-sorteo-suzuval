@@ -2,7 +2,6 @@ let allPremios = [];
 let currentIndex = 0;
 const PAGE_SIZE = 10;
 
-const apiUrlInput = document.getElementById('api-url');
 const bgUrlInput = document.getElementById('bg-url');
 const btnGuardar = document.getElementById('btn-guardar-config');
 const tableBody = document.getElementById('premios-body');
@@ -10,7 +9,6 @@ const btnCargarMas = document.getElementById('btn-cargar-mas');
 
 document.addEventListener('DOMContentLoaded', async () => {
     // Cargar config guardada
-    apiUrlInput.value = localStorage.getItem('API_URL') || '';
     bgUrlInput.value = localStorage.getItem('BG_URL') || '';
 
     // Cargar tabla
@@ -19,7 +17,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 btnGuardar.addEventListener('click', () => {
-    localStorage.setItem('API_URL', apiUrlInput.value);
     localStorage.setItem('BG_URL', bgUrlInput.value);
     alert('Configuración guardada exitosamente.');
     window.location.reload();
