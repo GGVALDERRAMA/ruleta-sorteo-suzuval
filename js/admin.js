@@ -150,7 +150,7 @@ if (formAgregarPremio) {
 
 function renderizarTabla() {
     if (allPremios.length === 0) {
-        tableBody.innerHTML = '<tr><td colspan="4" style="text-align:center;">No hay premios disponibles o falta configurar la API.</td></tr>';
+        tableBody.innerHTML = '<tr><td colspan="5" style="text-align:center;">No hay premios disponibles o falta configurar la API.</td></tr>';
         btnCargarMas.style.display = 'none';
         return;
     }
@@ -159,12 +159,14 @@ function renderizarTabla() {
     
     nextBatch.forEach(p => {
         const tr = document.createElement('tr');
+        tr.setAttribute('data-row-id', p.id);
+        tr.style.cursor = 'grab'; // Indicador visual de arrastrar
         const imgHtml = p.imagen && p.imagen.trim() !== '' 
             ? `<img src="${p.imagen}" style="width: 50px; height: 35px; object-fit: cover; border-radius: 4px; border: 1px solid #ccc;">`
             : '<span style="color:#94a3b8; font-size:12px;">Sin img</span>';
 
         tr.innerHTML = `
-            <td>${p.id || '-'}</td>
+            <td><span style="color:#94a3b8; margin-right:8px; cursor:grab;">☰</span> ${p.id || '-'}</td>
             <td>${imgHtml}</td>
             <td><strong>${p.nombre}</strong></td>
             <td>${p.stock}</td>
@@ -230,5 +232,33 @@ function renderizarTabla() {
         btnCargarMas.style.display = 'none';
     } else {
         btnCargarMas.style.display = 'block';
+    }
+
+    // Inicializar o reinicializar Drag & Drop
+    if (window.Sortable) {
+        if (window.miSortable) window.miSortable.destroy(); // Destruir instancia previa si existe
+        
+        window.miSortable = new Sortable(tableBody, {
+            animation: 150,
+            ghostClass: 'sortable-ghost',
+            onEnd: async function () {
+                const rows = tableBody.querySelectorAll('tr');
+                const nuevosOrdenes = [];
+                rows.forEach((row, index) => {
+                    const id = row.getAttribute('data-row-id');
+                    if (id) {
+                        nuevosOrdenes.push({ id: id, orden: index });
+                    }
+                });
+                
+                if (nuevosOrdenes.length > 0) {
+                    console.log("Guardando nuevo orden...");
+                    const success = await actualizarOrdenPremios(nuevosOrdenes);
+                    if (!success) {
+                        alert("No se pudo guardar el orden. Asegúrate de haber creado la columna 'orden' (tipo entero) en tu tabla 'premios' en Supabase.");
+                    }
+                }
+            }
+        });
     }
 }

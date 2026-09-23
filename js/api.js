@@ -66,11 +66,38 @@ async function obtenerPremios() {
             }
         });
         if (!response.ok) throw new Error("Error obteniendo premios");
-        return await response.json();
+        const data = await response.json();
+        // Ordenar en JS por la columna 'orden' (si existe, si no 0)
+        data.sort((a, b) => (a.orden || 0) - (b.orden || 0));
+        return data;
     } catch (error) {
         console.error('Error al obtener premios:', error);
         alert('Hubo un problema conectando con Supabase. ¿Ya creaste la tabla "premios"?');
         return [];
+    }
+}
+
+/**
+ * Actualiza el orden de los premios en Supabase tras hacer drag and drop.
+ */
+async function actualizarOrdenPremios(ordenes) {
+    try {
+        const promesas = ordenes.map(item => {
+            return fetch(`${SUPABASE_URL}/rest/v1/premios?id=eq.${item.id}`, {
+                method: 'PATCH',
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ orden: item.orden })
+            });
+        });
+        await Promise.all(promesas);
+        return true;
+    } catch (error) {
+        console.error("Error al actualizar orden:", error);
+        return false;
     }
 }
 
