@@ -47,10 +47,111 @@ document.addEventListener('DOMContentLoaded', async () => {
         bgCurrentText.innerHTML = `Fondo actual: <a href="${currentBg}" target="_blank">Ver imagen</a>`;
     }
 
-    // Cargar tabla
+    // Cargar tabla de ganadores
+    await renderizarGanadores();
+
+    // Cargar tabla de premios
     allPremios = await obtenerPremios(); 
     renderizarTabla();
 });
+
+// Variables y lógica de ganadores
+let ganadoresPage = 0;
+const GANADORES_PAGE_SIZE = 10;
+const ganadoresBody = document.getElementById('ganadores-body');
+const btnCargarMasGanadores = document.getElementById('btn-cargar-mas-ganadores');
+const btnExportarExcel = document.getElementById('btn-exportar-excel');
+
+async function renderizarGanadores() {
+    const rangoInicio = ganadoresPage * GANADORES_PAGE_SIZE;
+    const rangoFin = rangoInicio + GANADORES_PAGE_SIZE - 1;
+    
+    const ganadores = await obtenerGanadores(rangoInicio, rangoFin);
+    
+    if (ganadores.length === 0 && ganadoresPage === 0) {
+        ganadoresBody.innerHTML = '<tr><td colspan="5" style="text-align:center;">Aún no hay ganadores.</td></tr>';
+        btnCargarMasGanadores.style.display = 'none';
+        return;
+    }
+
+    ganadores.forEach(g => {
+        const tr = document.createElement('tr');
+        // Formatear fecha si existe (Supabase la devuelve en ISO 8601 por defecto en created_at)
+        let fechaFormateada = '-';
+        if (g.created_at) {
+            const fecha = new Date(g.created_at);
+            fechaFormateada = fecha.toLocaleString('es-CL', {
+                year: 'numeric', month: '2-digit', day: '2-digit', 
+                hour: '2-digit', minute: '2-digit'
+            });
+        }
+
+        tr.innerHTML = `
+            <td>${fechaFormateada}</td>
+            <td><strong>${g.nombre}</strong></td>
+            <td>${g.correo}</td>
+            <td>${g.telefono}</td>
+            <td><span style="background: #e2e8f0; padding: 4px 8px; border-radius: 4px; font-weight: bold; color: #0f172a;">${g.premio}</span></td>
+        `;
+        ganadoresBody.appendChild(tr);
+    });
+
+    if (ganadores.length < GANADORES_PAGE_SIZE) {
+        btnCargarMasGanadores.style.display = 'none';
+    } else {
+        btnCargarMasGanadores.style.display = 'block';
+    }
+}
+
+if (btnCargarMasGanadores) {
+    btnCargarMasGanadores.addEventListener('click', async () => {
+        ganadoresPage++;
+        await renderizarGanadores();
+    });
+}
+
+if (btnExportarExcel) {
+    btnExportarExcel.addEventListener('click', async () => {
+        btnExportarExcel.innerText = 'Generando...';
+        btnExportarExcel.disabled = true;
+
+        const todosLosGanadores = await obtenerTodosGanadores();
+        
+        if (todosLosGanadores.length === 0) {
+            alert("No hay ganadores para exportar.");
+            btnExportarExcel.innerText = 'Exportar a Excel';
+            btnExportarExcel.disabled = false;
+            return;
+        }
+
+        // Formatear datos para el excel
+        const dataParaExcel = todosLosGanadores.map(g => {
+            let fechaF = '';
+            if (g.created_at) {
+                const f = new Date(g.created_at);
+                fechaF = f.toLocaleString('es-CL');
+            }
+            return {
+                "Fecha y Hora": fechaF,
+                "Nombre": g.nombre,
+                "Correo": g.correo,
+                "Teléfono": g.telefono,
+                "Premio Ganado": g.premio
+            };
+        });
+
+        // Crear libro de trabajo con SheetJS
+        const worksheet = XLSX.utils.json_to_sheet(dataParaExcel);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Ganadores");
+        
+        // Descargar archivo
+        XLSX.writeFile(workbook, "Ganadores_Suzuval.xlsx");
+
+        btnExportarExcel.innerText = 'Exportar a Excel';
+        btnExportarExcel.disabled = false;
+    });
+}
 
 btnGuardar.addEventListener('click', async () => {
     let bgUrl = localStorage.getItem('BG_URL') || '';

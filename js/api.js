@@ -145,6 +145,47 @@ async function registrarGanador(datosGanador) {
 }
 
 /**
+ * Obtiene los ganadores de forma paginada para la tabla de administración.
+ */
+async function obtenerGanadores(rangoInicio, rangoFin) {
+    try {
+        const response = await fetch(`${SUPABASE_URL}/rest/v1/ganadores?select=*&order=created_at.desc`, {
+            method: 'GET',
+            headers: {
+                'apikey': SUPABASE_KEY,
+                'Authorization': `Bearer ${SUPABASE_KEY}`,
+                'Range': `${rangoInicio}-${rangoFin}`
+            }
+        });
+        if (!response.ok) throw new Error("Error obteniendo ganadores");
+        return await response.json();
+    } catch (error) {
+        console.error('Error al obtener ganadores:', error);
+        return [];
+    }
+}
+
+/**
+ * Obtiene todos los ganadores para exportar a Excel.
+ */
+async function obtenerTodosGanadores() {
+    try {
+        const response = await fetch(`${SUPABASE_URL}/rest/v1/ganadores?select=*&order=created_at.desc`, {
+            method: 'GET',
+            headers: {
+                'apikey': SUPABASE_KEY,
+                'Authorization': `Bearer ${SUPABASE_KEY}`
+            }
+        });
+        if (!response.ok) throw new Error("Error obteniendo todos los ganadores");
+        return await response.json();
+    } catch (error) {
+        console.error('Error al obtener todos los ganadores:', error);
+        return [];
+    }
+}
+
+/**
  * Agrega un nuevo premio a Supabase.
  */
 async function agregarPremio(nuevoPremio) {

@@ -32,6 +32,37 @@
             </div>
             <p>Configura los premios y gestiona el inventario.</p>
             
+            <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 30px 0;">
+
+            <!-- SECCIÓN GANADORES -->
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3>Últimos Ganadores</h3>
+                <button id="btn-exportar-excel" class="btn-primary" style="background: #10b981; width: auto; padding: 8px 16px; font-size: 14px;">Exportar a Excel</button>
+            </div>
+            
+            <div class="table-wrapper" style="margin-top: 0; margin-bottom: 30px;">
+                <table id="ganadores-table">
+                    <thead>
+                        <tr>
+                            <th>Fecha/Hora</th>
+                            <th>Nombre</th>
+                            <th>Correo</th>
+                            <th>Teléfono</th>
+                            <th>Premio</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ganadores-body">
+                        <!-- Llenado dinámicamente -->
+                    </tbody>
+                </table>
+                <div class="actions" style="padding: 15px; margin-top: 0;">
+                    <button id="btn-cargar-mas-ganadores" class="btn-primary" style="background:#64748b;">Cargar más ganadores (10)</button>
+                </div>
+            </div>
+
+            <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 30px 0;">
+
+            <h3>Configuración de la Ruleta</h3>
 
             <div class="input-group">
                 <label>Fondo de Pantalla de la Ruleta (Desde tu PC)</label>
@@ -85,6 +116,7 @@
     </div>
     
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
     <script src="js/api.js"></script>
     <script src="js/admin.js"></script>
