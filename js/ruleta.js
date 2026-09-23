@@ -24,14 +24,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 });
 
-// Lógica de acceso admin
-const linkAdmin = document.getElementById("link-admin");
-if (linkAdmin) {
-    linkAdmin.addEventListener("click", (e) => {
-        e.preventDefault();
-        loginConGoogle();
-    });
-}
+// El botón oculto ahora es un enlace normal a admin.html, donde se verificará la sesión.
 
 // Enviar formulario (Transición)
 form.addEventListener("submit", (e) => {
