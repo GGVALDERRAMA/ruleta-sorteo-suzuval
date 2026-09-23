@@ -15,7 +15,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Lógica del botón cerrar sesión
     const btnCerrarSesion = document.getElementById('btn-cerrar-sesion');
     if (btnCerrarSesion) {
-        btnCerrarSesion.addEventListener('click', cerrarSesion);
+        btnCerrarSesion.addEventListener('click', async (e) => {
+            e.preventDefault();
+            btnCerrarSesion.innerText = 'Cerrando...';
+            btnCerrarSesion.disabled = true;
+            await cerrarSesion();
+        });
     }
 
     // Cargar config guardada
