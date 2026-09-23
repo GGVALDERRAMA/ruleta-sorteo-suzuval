@@ -23,8 +23,9 @@
             
 
             <div class="input-group">
-                <label>Fondo de Pantalla de la Ruleta (URL o Base64)</label>
-                <input type="text" id="bg-url" placeholder="URL de la imagen o dejar en blanco para default">
+                <label>Fondo de Pantalla de la Ruleta (Desde tu PC)</label>
+                <input type="file" id="bg-file" accept="image/png, image/jpeg, image/webp" style="padding: 11px;">
+                <p style="font-size: 12px; margin-top: 5px; color: #64748b;" id="bg-current-text"></p>
             </div>
 
             <button id="btn-guardar-config" class="btn-primary" style="margin-bottom: 30px;">Guardar Configuración</button>

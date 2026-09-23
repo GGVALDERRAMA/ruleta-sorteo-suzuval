@@ -1,23 +1,38 @@
 let allPremios = [];
 let currentIndex = 0;
 const PAGE_SIZE = 10;
-
-const bgUrlInput = document.getElementById('bg-url');
+const bgFileInput = document.getElementById('bg-file');
+const bgCurrentText = document.getElementById('bg-current-text');
 const btnGuardar = document.getElementById('btn-guardar-config');
 const tableBody = document.getElementById('premios-body');
 const btnCargarMas = document.getElementById('btn-cargar-mas');
 
 document.addEventListener('DOMContentLoaded', async () => {
     // Cargar config guardada
-    bgUrlInput.value = localStorage.getItem('BG_URL') || '';
+    const currentBg = localStorage.getItem('BG_URL');
+    if (currentBg && bgCurrentText) {
+        bgCurrentText.innerHTML = `Fondo actual: <a href="${currentBg}" target="_blank">Ver imagen</a>`;
+    }
 
     // Cargar tabla
     allPremios = await obtenerPremios(); 
     renderizarTabla();
 });
 
-btnGuardar.addEventListener('click', () => {
-    localStorage.setItem('BG_URL', bgUrlInput.value);
+btnGuardar.addEventListener('click', async () => {
+    let bgUrl = localStorage.getItem('BG_URL') || '';
+    if (bgFileInput && bgFileInput.files.length > 0) {
+        btnGuardar.disabled = true;
+        btnGuardar.innerText = 'Subiendo fondo...';
+        const uploadedUrl = await uploadImageToSupabase(bgFileInput.files[0]);
+        if (uploadedUrl) {
+            bgUrl = uploadedUrl;
+        } else {
+            alert('Error subiendo el fondo. Se mantendrá el anterior.');
+        }
+    }
+    
+    localStorage.setItem('BG_URL', bgUrl);
     alert('Configuración guardada exitosamente.');
     window.location.reload();
 });
