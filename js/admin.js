@@ -20,17 +20,17 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
-    // Verificar sesiÃ³n (solo usuarios @suzuval.cl)
+    // Verificar sesión (solo usuarios @suzuval.cl)
     const autenticado = await verificarSesionAdmin();
     if (!autenticado) {
         if (loginPanel) loginPanel.style.display = 'block';
-        return; // Se detiene la ejecuciÃ³n si no estÃ¡ logueado
+        return; // Se detiene la ejecución si no está logueado
     }
 
-    // Mostrar panel de administraciÃ³n
+    // Mostrar panel de administración
     if (adminPanel) adminPanel.style.display = 'block';
 
-    // LÃ³gica del botÃ³n cerrar sesiÃ³n
+    // Lógica del botón cerrar sesión
     const btnCerrarSesion = document.getElementById('btn-cerrar-sesion');
     if (btnCerrarSesion) {
         btnCerrarSesion.addEventListener('click', async (e) => {
@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     renderizarTabla();
 });
 
-// Variables y lÃ³gica de ganadores
+// Variables y lógica de ganadores
 let ganadoresPage = 0;
 const GANADORES_PAGE_SIZE = 10;
 const ganadoresBody = document.getElementById('ganadores-body');
@@ -77,7 +77,7 @@ async function renderizarGanadores() {
     const ganadores = await obtenerGanadores(rangoInicio, rangoFin);
     
     if (ganadores.length === 0 && ganadoresPage === 0) {
-        ganadoresBody.innerHTML = '<tr><td colspan="5" style="text-align:center;">AÃºn no hay ganadores.</td></tr>';
+        ganadoresBody.innerHTML = '<tr><td colspan="5" style="text-align:center;">Aún no hay ganadores.</td></tr>';
         btnCargarMasGanadores.style.display = 'none';
         return;
     }
@@ -143,7 +143,7 @@ if (btnExportarExcel) {
                 "Fecha y Hora": fechaF,
                 "Nombre": g.nombre,
                 "Correo": g.correo,
-                "TelÃ©fono": g.telefono,
+                "Teléfono": g.telefono,
                 "Premio Ganado": g.premio
             };
         });
@@ -166,12 +166,12 @@ btnGuardar.addEventListener('click', async () => {
     if (bgFileInput && bgFileInput.files.length > 0) {
         btnGuardar.disabled = true;
         btnGuardar.innerText = 'Subiendo fondo...';
-        // Usamos el bucket 'fondos' para guardar las imÃ¡genes de fondo
+        // Usamos el bucket 'fondos' para guardar las imágenes de fondo
         const uploadedUrl = await uploadImageToSupabase(bgFileInput.files[0], 'fondos');
         if (uploadedUrl) {
             bgUrl = uploadedUrl;
         } else {
-            alert('Error subiendo el fondo. Verifica la conexiÃ³n.');
+            alert('Error subiendo el fondo. Verifica la conexión.');
         }
     }
     
@@ -180,7 +180,7 @@ btnGuardar.addEventListener('click', async () => {
     if (checkDescontar) {
         localStorage.setItem('AUTO_DESCONTAR', checkDescontar.checked);
     }
-    alert('ConfiguraciÃ³n guardada exitosamente.');
+    alert('Configuración guardada exitosamente.');
     window.location.reload();
 });
 
@@ -214,7 +214,7 @@ async function uploadImageToSupabase(file, bucket = BUCKET_NAME) {
     }
 }
 
-// LÃ³gica para agregar un nuevo premio desde la web
+// Lógica para agregar un nuevo premio desde la web
 const formAgregarPremio = document.getElementById('form-agregar-premio');
 if (formAgregarPremio) {
     formAgregarPremio.addEventListener('submit', async (e) => {
@@ -227,11 +227,11 @@ if (formAgregarPremio) {
             const fileInput = document.getElementById('nuevo-imagen-file');
             let imageUrl = '';
             
-            // Subir imagen a Supabase si se seleccionÃ³ una
+            // Subir imagen a Supabase si se seleccionó una
             if (fileInput.files.length > 0) {
                 imageUrl = await uploadImageToSupabase(fileInput.files[0]);
                 if (!imageUrl) {
-                    alert('Error subiendo la imagen. Verifica que el Bucket "premios" exista y sea pÃºblico.');
+                    alert('Error subiendo la imagen. Verifica que el Bucket "premios" exista y sea público.');
                     throw new Error('Fallo upload imagen');
                 }
             }
@@ -247,10 +247,10 @@ if (formAgregarPremio) {
             const exito = await agregarPremio(nuevoPremio);
 
             if (exito) {
-                alert('Â¡Premio agregado exitosamente!');
+                alert('¡Premio agregado exitosamente!');
                 window.location.reload(); // Recargar para ver los cambios
             } else {
-                alert('Hubo un error al guardar el premio en la Base de Datos. Verifica las PolÃ­ticas (Policies) de la tabla "premios" en Supabase.');
+                alert('Hubo un error al guardar el premio en la Base de Datos. Verifica las Políticas (Policies) de la tabla "premios" en Supabase.');
                 btnSubmit.disabled = false;
                 btnSubmit.innerText = 'Agregar';
             }
@@ -296,7 +296,7 @@ function renderizarTabla() {
         btn.addEventListener('click', async (e) => {
             const nombre = e.target.getAttribute('data-nombre');
             const imagen = e.target.getAttribute('data-imagen');
-            if (confirm(`Â¿Deseas duplicar el premio "${nombre}"?`)) {
+            if (confirm(`¿Deseas duplicar el premio "${nombre}"?`)) {
                 e.target.disabled = true;
                 e.target.innerText = 'Duplicando...';
                 
@@ -323,7 +323,7 @@ function renderizarTabla() {
     document.querySelectorAll('.btn-eliminar').forEach(btn => {
         btn.addEventListener('click', async (e) => {
             const id = e.target.getAttribute('data-id');
-            if (confirm('Â¿EstÃ¡s seguro de que deseas eliminar este premio?')) {
+            if (confirm('¿Estás seguro de que deseas eliminar este premio?')) {
                 e.target.disabled = true;
                 e.target.innerText = 'Eliminando...';
                 const exito = await eliminarPremio(id);
@@ -331,7 +331,7 @@ function renderizarTabla() {
                     alert('Premio eliminado exitosamente.');
                     window.location.reload();
                 } else {
-                    alert('Error al eliminar el premio. Verifica la conexiÃ³n o permisos.');
+                    alert('Error al eliminar el premio. Verifica la conexión o permisos.');
                     e.target.disabled = false;
                     e.target.innerText = 'Eliminar';
                 }
@@ -368,7 +368,7 @@ function renderizarTabla() {
                     console.log("Guardando nuevo orden...");
                     const success = await actualizarOrdenPremios(nuevosOrdenes);
                     if (!success) {
-                        alert("No se pudo guardar el orden. AsegÃºrate de haber creado la columna 'orden' (tipo entero) en tu tabla 'premios' en Supabase.");
+                        alert("No se pudo guardar el orden. Asegúrate de haber creado la columna 'orden' (tipo entero) en tu tabla 'premios' en Supabase.");
                     }
                 }
             }

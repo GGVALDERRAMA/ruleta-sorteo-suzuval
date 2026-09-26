@@ -2,11 +2,11 @@
 const SUPABASE_URL = 'https://gbbpsoghivdomhnobxhr.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdiYnBzb2doaXZkb21obm9ieGhyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAxMDEzNDEsImV4cCI6MjEwNTY3NzM0MX0.kF2CIgfEADObk38vtfTppQNx0WEq5vOEnCufza6jroY';
 
-// Inicializar cliente Supabase (requiere que el script de CDN estÃ© cargado en HTML)
+// Inicializar cliente Supabase (requiere que el script de CDN esté cargado en HTML)
 const supabaseClient = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
 
 /**
- * Inicia sesiÃ³n con Google usando OAuth.
+ * Inicia sesión con Google usando OAuth.
  */
 async function loginConGoogle() {
     if (!supabaseClient) return alert("Cliente de Supabase no cargado.");
@@ -18,12 +18,12 @@ async function loginConGoogle() {
     });
     if (error) {
         console.error("Error en login:", error);
-        alert("Error al iniciar sesiÃ³n con Google.");
+        alert("Error al iniciar sesión con Google.");
     }
 }
 
 /**
- * Verifica si el usuario actual estÃ¡ autenticado y tiene correo @suzuval.cl
+ * Verifica si el usuario actual está autenticado y tiene correo @suzuval.cl
  */
 async function verificarSesionAdmin() {
     if (!supabaseClient) return false;
@@ -35,7 +35,7 @@ async function verificarSesionAdmin() {
 
     const email = session.user.email;
     if (!email.endsWith('@suzuval.cl')) {
-        alert("Acceso denegado: Solo correos @suzuval.cl estÃ¡n permitidos.");
+        alert("Acceso denegado: Solo correos @suzuval.cl están permitidos.");
         await supabaseClient.auth.signOut();
         return false;
     }
@@ -43,7 +43,7 @@ async function verificarSesionAdmin() {
 }
 
 /**
- * Cierra la sesiÃ³n activa.
+ * Cierra la sesión activa.
  */
 async function cerrarSesion() {
     if (!supabaseClient) return;
@@ -72,7 +72,7 @@ async function obtenerPremios() {
         return data;
     } catch (error) {
         console.error('Error al obtener premios:', error);
-        alert('Hubo un problema conectando con Supabase. Â¿Ya creaste la tabla "premios"?');
+        alert('Hubo un problema conectando con Supabase. ¿Ya creaste la tabla "premios"?');
         return [];
     }
 }
@@ -145,7 +145,7 @@ async function registrarGanador(datosGanador) {
 }
 
 /**
- * Obtiene los ganadores de forma paginada para la tabla de administraciÃ³n.
+ * Obtiene los ganadores de forma paginada para la tabla de administración.
  */
 async function obtenerGanadores(rangoInicio, rangoFin) {
     try {

@@ -13,9 +13,9 @@ const seccionRegistro = document.getElementById("registro-section");
 const seccionRuleta = document.getElementById("ruleta-section");
 const btnGirar = document.getElementById("btn-girar");
 
-// InicializaciÃ³n
+// Inicialización
 document.addEventListener("DOMContentLoaded", async () => {
-    // Configurar fondo dinÃ¡mico si existe
+    // Configurar fondo dinámico si existe
     const bgUrl = localStorage.getItem('BG_URL');
     if (bgUrl && bgUrl.trim() !== '') {
         document.getElementById('dynamic-bg').style.backgroundImage = `url('${bgUrl}')`;
@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     prepararNuevaRuleta();
 });
 
-// El botÃ³n oculto ahora es un enlace normal a admin.html, donde se verificarÃ¡ la sesiÃ³n.
+// El botón oculto ahora es un enlace normal a admin.html, donde se verificará la sesión.
 
 function prepararNuevaRuleta() {
     if (todosLosPremios.length === 0) return;
@@ -50,7 +50,7 @@ function prepararNuevaRuleta() {
     dibujarRuleta();
 }
 
-// Enviar formulario (TransiciÃ³n)
+// Enviar formulario (Transición)
 form.addEventListener("submit", (e) => {
     e.preventDefault();
     datosUsuario = {
@@ -68,7 +68,7 @@ form.addEventListener("submit", (e) => {
     setTimeout(() => {
         seccionRuleta.classList.remove("hidden");
         seccionRuleta.classList.add("active");
-    }, 400); // Dar tiempo a la transiciÃ³n CSS
+    }, 400); // Dar tiempo a la transición CSS
 });
 
 // Dibujar Ruleta en Canvas
@@ -97,7 +97,7 @@ function dibujarRuleta(anguloRotacion = 0) {
         ctx.moveTo(centroX, centroY);
         ctx.arc(centroX, centroY, radio, anguloInicio, anguloFin);
         ctx.fill();
-        ctx.stroke(); // LÃ­nea separadora
+        ctx.stroke(); // Línea separadora
         ctx.closePath();
 
         // Texto
@@ -128,7 +128,7 @@ function dibujarRuleta(anguloRotacion = 0) {
     ctx.closePath();
 }
 
-// LÃ³gica de Giro
+// Lógica de Giro
 let girando = false;
 btnGirar.addEventListener("click", () => {
     if (girando || premiosVisibles.length === 0) return;
@@ -140,7 +140,7 @@ btnGirar.addEventListener("click", () => {
     const premioGanado = premioGanadoActual;
     
     const arcos = (2 * Math.PI) / premiosVisibles.length;
-    // Calcular el Ã¡ngulo donde el centro del trozo del ganador queda justo arriba (270 grados = 1.5 PI)
+    // Calcular el ángulo donde el centro del trozo del ganador queda justo arriba (270 grados = 1.5 PI)
     // Canvas inicia 0 en la derecha (3 en punto). Arriba es -Math.PI / 2
     const targetA = indexGanador * arcos + (arcos / 2);
     // Vueltas extra para el efecto
@@ -173,7 +173,7 @@ async function finalizarGiro(premioGanado, anguloFinal) {
     dibujarRuleta(anguloFinal);
     
     const titulo = document.getElementById("ruleta-title");
-    titulo.innerText = `Â¡Ganaste: ${premioGanado.nombre}!`;
+    titulo.innerText = `¡Ganaste: ${premioGanado.nombre}!`;
     titulo.classList.add("win-highlight");
 
     // Mostrar imagen del premio si existe
@@ -196,7 +196,7 @@ async function finalizarGiro(premioGanado, anguloFinal) {
     });
     
     setTimeout(async () => {
-        alert(exito ? "Â¡Premio registrado con Ã©xito! RetÃ­ralo en caja." : "Hubo un error al registrar, pero ganaste: " + premioGanado.nombre);
+        alert(exito ? "¡Premio registrado con éxito! Retíralo en caja." : "Hubo un error al registrar, pero ganaste: " + premioGanado.nombre);
         
         // Redibujar si el stock llegó a 0 y auto-descuento está activado
         if (localStorage.getItem('AUTO_DESCONTAR') !== 'false') {
