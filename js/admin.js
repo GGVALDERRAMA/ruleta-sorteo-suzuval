@@ -279,7 +279,7 @@ function renderizarTabla() {
             : '<span style="color:#94a3b8; font-size:12px;">Sin img</span>';
 
         tr.innerHTML = `
-            <td><span style="color:#94a3b8; margin-right:8px; cursor:grab;">â˜°</span> ${p.id || '-'}</td>
+            <td><span style="color:#94a3b8; margin-right:8px; cursor:grab;">☰</span> ${p.id || '-'}</td>
             <td>${imgHtml}</td>
             <td><strong>${p.nombre}</strong></td>
             <td>${p.stock}</td>
