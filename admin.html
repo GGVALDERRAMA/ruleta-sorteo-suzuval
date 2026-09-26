@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -20,23 +20,23 @@
         <!-- PANEL DE LOGIN -->
         <div id="login-panel" class="glass-panel active" style="display: none; text-align: center; padding: 50px 20px;">
             <h2>Acceso Restringido</h2>
-            <p style="margin-bottom: 25px;">Debes iniciar sesión con tu cuenta de correo @suzuval.cl</p>
-            <button id="btn-login-google" class="btn-primary" style="width: auto; padding: 12px 24px; font-size: 16px;">Iniciar sesión con Google</button>
+            <p style="margin-bottom: 25px;">Debes iniciar sesiÃ³n con tu cuenta de correo @suzuval.cl</p>
+            <button id="btn-login-google" class="btn-primary" style="width: auto; padding: 12px 24px; font-size: 16px;">Iniciar sesiÃ³n con Google</button>
         </div>
         
         <!-- PANEL DE ADMINISTRADOR -->
         <div id="admin-panel" class="glass-panel active" style="display: none;">
             <div style="display: flex; justify-content: space-between; align-items: center;">
-                <h2>Panel de Administración</h2>
-                <button id="btn-cerrar-sesion" class="btn-primary" style="background:#dc2626; padding: 8px 16px; width: auto; font-size: 14px;">Cerrar Sesión</button>
+                <h2>Panel de AdministraciÃ³n</h2>
+                <button id="btn-cerrar-sesion" class="btn-primary" style="background:#dc2626; padding: 8px 16px; width: auto; font-size: 14px;">Cerrar SesiÃ³n</button>
             </div>
             <p>Configura los premios y gestiona el inventario.</p>
             
             <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 30px 0;">
 
-            <!-- SECCIÓN GANADORES -->
+            <!-- SECCIÃ“N GANADORES -->
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                <h3>Últimos Ganadores</h3>
+                <h3>Ãšltimos Ganadores</h3>
                 <button id="btn-exportar-excel" class="btn-primary" style="background: #10b981; width: auto; padding: 8px 16px; font-size: 14px;">Exportar a Excel</button>
             </div>
             
@@ -47,30 +47,35 @@
                             <th>Fecha/Hora</th>
                             <th>Nombre</th>
                             <th>Correo</th>
-                            <th>Teléfono</th>
+                            <th>TelÃ©fono</th>
                             <th>Premio</th>
                         </tr>
                     </thead>
                     <tbody id="ganadores-body">
-                        <!-- Llenado dinámicamente -->
+                        <!-- Llenado dinÃ¡micamente -->
                     </tbody>
                 </table>
                 <div class="actions" style="padding: 15px; margin-top: 0;">
-                    <button id="btn-cargar-mas-ganadores" class="btn-primary" style="background:#64748b;">Cargar más ganadores (10)</button>
+                    <button id="btn-cargar-mas-ganadores" class="btn-primary" style="background:#64748b;">Cargar mÃ¡s ganadores (10)</button>
                 </div>
             </div>
 
             <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 30px 0;">
 
-            <h3>Configuración de la Ruleta</h3>
+            <h3>ConfiguraciÃ³n de la Ruleta</h3>
 
             <div class="input-group">
                 <label>Fondo de Pantalla de la Ruleta (Desde tu PC)</label>
                 <input type="file" id="bg-file" accept="image/png, image/jpeg, image/webp" style="padding: 11px;">
                 <p style="font-size: 12px; margin-top: 5px; color: #64748b;" id="bg-current-text"></p>
             </div>
+            <div style="margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+                <input type="checkbox" id="check-descontar-premio" checked style="width: 20px; height: 20px; cursor: pointer;">
+                <label for="check-descontar-premio" style="cursor: pointer; margin-bottom: 0;">Descontar stock/eliminar premio autom&aacute;ticamente al ganar</label>
+            </div>
 
-            <button id="btn-guardar-config" class="btn-primary" style="margin-bottom: 30px;">Guardar Configuración</button>
+
+            <button id="btn-guardar-config" class="btn-primary" style="margin-bottom: 30px;">Guardar ConfiguraciÃ³n</button>
 
             <h3>Inventario de Premios</h3>
             
@@ -104,13 +109,13 @@
                         </tr>
                     </thead>
                     <tbody id="premios-body">
-                        <!-- Llenado dinámicamente -->
+                        <!-- Llenado dinÃ¡micamente -->
                     </tbody>
                 </table>
             </div>
             
             <div class="actions">
-                <button id="btn-cargar-mas" class="btn-primary" style="background:#64748b;">Cargar más (10)</button>
+                <button id="btn-cargar-mas" class="btn-primary" style="background:#64748b;">Cargar mÃ¡s (10)</button>
             </div>
         </div>
     </div>
@@ -122,3 +127,4 @@
     <script src="js/admin.js"></script>
 </body>
 </html>
+
